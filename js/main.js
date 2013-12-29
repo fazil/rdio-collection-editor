@@ -15,7 +15,16 @@
 				if (R.authenticated()) {
 					self.loadCollection();
 				} else {
-					R.authenticate();
+					var template = _.template($("#unauthenticated-template").text().trim());
+					$("#collection").html(template);
+					$("#authenticate").click(function(){
+						R.authenticate(function(authenticated){
+							if(authenticated){
+								$("#collection").empty();
+								self.loadCollection();
+							}
+						});
+					});
 				}
 			});
 		},
